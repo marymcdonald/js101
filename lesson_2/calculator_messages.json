@@ -1,0 +1,35 @@
+{
+  "langMessage": {
+    "intro": "Please pick a language: EN | FR | DE"
+  },
+  "EN": {
+    "welcome" : "Welcome to Calculator!",
+    "first" : "What's the first number?",
+    "invalidNum" : "Hmm... that doesn't look like a valid number. Try again.",
+    "second" : "What's the second number?",
+    "operation" : "What operation would you like to perform?\n1)Add 2) Subtract 3) Multiply 4) Divide",
+    "invalidOperation" : "You must choose 1, 2, 3 or 4",
+    "result": "The result is: ",
+    "nextAction" : "Would you like to make another calculation? y/n"
+  },
+  "FR": {
+    "welcome": "Bienvenue à la Calculatrice!",
+    "first": "Veuillez entrer un chiffre: ",
+    "invalidNum": "Hmm...vous avez choisi un caractère qui n'est pas un chiffre. Veuillez essayer encore une fois.",
+    "second": "Veuillez entrer un autre chiffre: ",
+    "operation": "Choississez une opération: 1) additionner 2) soustraire 3) multiplier 4) diviser",
+    "invalidOperation": "Vous n'avez pas choisi une opération valide. Choississez le 1, 2, 3, ou 4. ",
+    "result": "Le résultat est: ",
+    "nextAction": "Voudriez-vous faire une autre calculation? o/n"
+  },
+  "DE": {
+    "welcome": "Wilkommen zum Rechner!",
+    "first": "Bitte füge eine Ziffer ein:",
+    "invalidNum": "Hmm...das sieht nicht wie eine gültige Ziffer aus. Bitte noch einmal probieren.",
+    "second": "Bitte noch eine Ziffer einzufügen: ",
+    "operation": "Wähle eine mathematische Operation aus: 1) das Hinzufügen 2)das Abziehen 3) die Vervielfachung 4) die Division.",
+    "invalidOperation": "Ungültige Operation ausgewählt. Wähle 1, 2, 3, oder 4 aus.",
+    "result": "Das Ergebnis ist: ",
+    "nextAction": "Noch eine Operation machen? j/n"
+  }
+}
