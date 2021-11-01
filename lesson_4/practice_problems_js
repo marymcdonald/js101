@@ -1,0 +1,174 @@
+//q1
+[1, 2, 3].filter(num => 'hi');
+
+//the return value is:
+//[] (empty array)
+//the return value of the callback returns undefined because no arguments are
+//provided
+
+/* answer: [1, 2, 3]
+filter performs selection based on the truthiness of the callback's return
+value. In this case, the return value is always 'hi', which is truthy.
+Therefore filter will return a new array containing all of the elements in the
+original array.*/
+
+//q2
+[1, 2, 3].map(num => {
+  num * num;
+});
+
+//this returns [undefined, undefined, undefined]
+//callback has no explicit return value
+
+/*answer:
+map looks at the return value of the callback function to decide the elements
+in the returned array. Each element in the original array is replaced by what
+the callback returns for that element. In this case, there's no explicit return
+statement in the callback function, which means that the callback returns
+undefined each time.*/
+
+//q3
+[1, 2, 3].map(num => num * num);
+
+//returns [1, 4, 9]
+
+/* answer: Without braces surrounding the body of the arrow function,
+JavaScript uses the computed value as the return value. In this case, the
+callback returns 1, 4, and 9 on the 3 iterations.*/
+
+//q4
+['ant', 'bear', 'caterpillar'].pop().length;
+
+//I think this should return 2.
+//pop causes 'caterpillar' to be removed from the array
+//and length is called by ['ant', 'bear']
+
+/* answer: 11
+There are a couple of things going on here. First, pop is being called on the
+array. pop destructively removes the last element from the calling array and
+returns it. Second, length is being accessed on the return value by pop. Once
+we realize that length is evaluating the return value of pop ('caterpillar')
+then the final return value of 11 should make sense.*/
+
+//q5
+[1, 2, 3].every(num => {
+  return num = num * 2;
+});
+
+//returns false
+//the expression isn't a test, but sets the value
+//e.g. returns 2 = 4... an error?
+
+/* answer:
+The return values of the callback will be 2, 4, and 6 on the respective
+iterations. The expression num = num * 2 is an assignment expression and will
+evaluate as the expression on the right-hand side of the assignment and that is
+what gets returned in each iteration. Since all of those numbers are truthy
+values, every will return true.*/
+
+//q6
+let arr = [1, 2, 3, 4, 5];
+arr.fill(1, 1, 5);
+
+//fill with 1, from position 1 to position 5
+//returns [1, 1, 1, 1, 1]
+
+//q7
+['ant', 'bear'].map(elem => {
+  if (elem.length > 3) {
+    return elem;
+  }
+});
+
+//first value doesn't have an explicit return value, so undefined is returned
+//second valuej returns 'bear'
+//[undefined, 'bear'] is the return value of map
+
+/*added context for the answer:
+There are some interesting things to point out here. First, the return value of
+map is an array, which is the collection type that map always returns. Second,
+where did we get that undefined value? If we look at the if condition (elem
+length > 3), we'll notice that it evaluates as true when the length of the
+element is greater than 3. In this case, the only value with a length greater
+than 3 is 'bear'. Thus, for the first element, 'ant', the condition evaluates
+as false and elem isn't returned.
+
+When a function doesn't explicitly return something, it implicitly returns
+undefined. That's why we see undefined as the first element of the returned
+array.*/
+
+//q8
+let flintstones = ["Fred", "Barney", "Wilma", "Betty", "Pebbles", "Bambam"];
+
+const entries = Object.keys(flintstones); //this part isn't actually needed; could've just used index below!
+let flintObj = {};
+flintstones.forEach((element, index) => {
+  flintObj[element] = entries[index];
+});
+
+console.log(flintObj);
+
+//q9
+let ages = {
+  Herman: 32,
+  Lily: 30,
+  Grandpa: 5843,
+  Eddie: 10,
+  Marilyn: 22,
+  Spot: 237
+};
+
+let numbers = Object.values(ages);
+
+let ageTally = numbers.reduce((num1, num2) => num1 + num2);
+console.log(ageTally);
+
+//could be simplified to
+//Object.values(ages).reduce((agesSum, currAge) => agesSum + currAge, 0);
+// 6174
+
+//q10
+let minAge = Math.min(...numbers);
+console.log(minAge);
+
+//have to use spread operator with Math.min() because it expects numerical
+//arguments, not an array
+
+//q11
+let statement = "The Flintstones Rock";
+statement = statement.split(' ').join('');
+
+const keys = statement.split('');
+let statementObj = {};
+
+keys.forEach(element => {
+  if (Object.keys(statementObj).includes(element)) {
+    statementObj[element] += 1;
+  } else {
+    statementObj[element] = 1;
+  }
+});
+
+console.log(statementObj);
+
+//alternative solution:
+/*let charsInStatement = statement.split('').filter(char => char !== ' ');
+let result = {};
+
+charsInStatement.forEach(char => {
+  result[char] = result[char] || 0;
+  result[char] += 1;
+});
+
+console.log(result);
+
+result[char] = result[char] || 0;
+
+We're taking advantage of something called short-circuiting here. What this
+means is that JavaScript first evaluates the left operand (result[char]) of the
+|| operator. If it is truthy, JavaScript doesn't evaluate the right operand; it
+only evaluates the right operand when the left is falsy. Thus, if a character
+doesn't exist as a key in our results object, result[char] will return
+undefined — a falsy value — resulting in the assignment of result[char] to 0.
+If result[char] instead evaluates to a truthy value such as 1, it'll simply
+reassign the current value to result[char].*/
