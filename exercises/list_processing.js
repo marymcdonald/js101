@@ -19,7 +19,7 @@ console.log(sum(23));           // 5
 console.log(sum(496));          // 19
 console.log(sum(123456789));    // 45
 
- alternative answer:
+//alternative answer:
 function sum(number) {
   return String(number)
     .split("")
@@ -57,7 +57,7 @@ console.log(multiplyAllPairs([2, 4], [4, 3, 1, 2]));    // [2, 4, 4, 6, 8, 8, 12
 
 //q4
 
-/*function leadingSubstrings(str) {
+function leadingSubstrings(str) {
   let strArray = [];
 
   for (let index = 1; index <= str.length; index += 1) {
@@ -110,14 +110,14 @@ function substrings(str) {
 function substrings(str) {
   let arr = str.split('');
 
-  let newArray = arr.map(char => str.slice(arr.indexOf(char)).split());
+  let newArray = arr.map((_, index) => str.slice(index).split());
 
   return newArray.map(element => leadingSubstrings(element[0])).flat();
 
 }
 
 
-//console.log(substrings('abcde'));
+console.log(substrings('abcde'));
 
 // returns
 [ "a", "ab", "abc", "abcd", "abcde",
@@ -126,6 +126,8 @@ function substrings(str) {
   "d", "de",
   "e" ]
 
+console.log(substrings('madam'));
+  /*
 //q6
 function palindromes(str) {
   //console.log(substrings(str));
@@ -183,7 +185,7 @@ function sumOfSums(numbers) {
       numbers.slice(0, idx + 1).reduce((sum, value) => sum + value)
     )
     .reduce((sum, value) => sum + value);
-}*/
+}
 
 //q8
 function buyFruit(fruits) {
@@ -257,6 +259,7 @@ function isItemAvailable(id, list) {
   } else {
     return false;
   }
+}
 
 //alternative solution
 function isItemAvailable(item, transactions) {
@@ -288,4 +291,4 @@ let transactions2 = [ { id: 101, movement: 'in',  quantity:  5 },
 
 console.log(isItemAvailable(101, transactions2));     // false
 console.log(isItemAvailable(103, transactions2));     // false
-console.log(isItemAvailable(105, transactions2));     // true
+console.log(isItemAvailable(105, transactions2));     // true*/
