@@ -127,7 +127,7 @@ console.log(substrings('abcde'));
   "e" ]
 
 console.log(substrings('madam'));
-  /*
+
 //q6
 function palindromes(str) {
   //console.log(substrings(str));
@@ -291,4 +291,4 @@ let transactions2 = [ { id: 101, movement: 'in',  quantity:  5 },
 
 console.log(isItemAvailable(101, transactions2));     // false
 console.log(isItemAvailable(103, transactions2));     // false
-console.log(isItemAvailable(105, transactions2));     // true*/
+console.log(isItemAvailable(105, transactions2));     // true
