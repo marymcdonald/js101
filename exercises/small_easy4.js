@@ -1,4 +1,4 @@
-/*let readline = require('readline-sync');
+let readline = require('readline-sync');
 
 //q1
 function age() {
@@ -203,7 +203,7 @@ function swap(str) {
 
   return arr.join(' ');
 }
-*/
+
 //alternative solution to above function
 function swap(str) {
   let arr = str.split(' ');
