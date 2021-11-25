@@ -1,4 +1,4 @@
-let readline = require('readline-sync');
+/*let readline = require('readline-sync');
 
 //q1
 function age() {
@@ -203,6 +203,16 @@ function swap(str) {
 
   return arr.join(' ');
 }
+*/
+//alternative solution to above function
+function swap(str) {
+  let arr = str.split(' ');
+
+  let newArr = arr.map(element =>
+    swapFirstAndLast(element, element[0], element[element.length - 1]));
+
+  return newArr.join(' ');
+}
 
 function swapFirstAndLast(word, first, last) {
   let copy = word.split('');
@@ -211,6 +221,6 @@ function swapFirstAndLast(word, first, last) {
 
   return copy.join('');
 }
-swap('Oh what a wonderful day it is');  // "hO thaw a londerfuw yad ti si"
-swap('Abcde');                          // "ebcdA"
-swap('a');                              // "a"
+console.log(swap('Oh what a wonderful day it is'));  // "hO thaw a londerfuw yad ti si"
+console.log(swap('Abcde'));                          // "ebcdA"
+console.log(swap('a'));                              // "a"
