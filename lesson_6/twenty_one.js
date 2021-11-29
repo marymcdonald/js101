@@ -7,8 +7,10 @@ const SUITS_SYMBOLS = {
 };
 const ACCEPTABLE_ANSWERS_PLAY = ['s', 'S', 'h', 'H'];
 const ACCEPTABLE_ANSWERS_END_GAME = ['y', 'Y', 'n', 'N'];
-const GAME_NUMBERS = [21, 17];
+const HAND_LIMIT = 21;
+const DEALER_LIMIT = 17;
 const PLAYERS = ['player', 'dealer'];
+const GAMES_NEEDED_TO_WIN_MATCH = 3;
 
 function initializeDeck() {
   let deck = {
@@ -107,8 +109,47 @@ function formatCardsDisplay(hand, player = 'you') {
   return prompt(handStr.join(', ') + '\n');
 }
 
+function playerTurn(playerHand, playerTotal, deck) {
+
+  while (true) {
+    prompt("Would you like to hit (h/H) or stay (s/S)?");
+    let answer = readline.prompt();
+
+    while (!ACCEPTABLE_ANSWERS_PLAY.includes(answer)) {
+      prompt('Sorry, that\'s not one of the options.');
+      prompt("Would you like to hit (h/H) or stay (s/S)?");
+      answer = readline.prompt();
+    }
+
+    if (answer.toLowerCase() === 'h') {
+      addToHand(playerHand, dealCard(deck));
+      prompt('Your hand:');
+      formatCardsDisplay(playerHand);
+    }
+
+    playerTotal = calculateTotal(playerHand);
+
+    if (answer.toLowerCase() === 's' || busted(playerTotal)) break;
+
+  }
+
+}
+
+function dealerTurn(dealerHand, dealerTotal, deck) {
+  while (dealerTotal <= DEALER_LIMIT) {
+    console.clear();
+    prompt(`Dealer draws a card.\n`);
+    wait(1500);
+    addToHand(dealerHand, dealCard(deck));
+    prompt('Dealer\'s hand: ');
+    formatCardsDisplay(dealerHand, 'dealer');
+    dealerTotal = calculateTotal(dealerHand);
+    wait(1500);
+  }
+}
+
 function busted(handTotal) {
-  return handTotal > GAME_NUMBERS[0];
+  return handTotal > HAND_LIMIT;
 }
 
 function announceBust(player) {
@@ -194,9 +235,9 @@ function updateGameTally(playerTotal, dealerTotal, scores) {
 
 function bestOfFive(scores) {
   let winner = null;
-  if (scores[PLAYERS[0]] === 3) {
+  if (scores[PLAYERS[0]] === GAMES_NEEDED_TO_WIN_MATCH) {
     winner = PLAYERS[0];
-  } else if (scores[PLAYERS[1]] === 3) {
+  } else if (scores[PLAYERS[1]] === GAMES_NEEDED_TO_WIN_MATCH) {
     winner = PLAYERS[1];
   }
   return winner;
@@ -211,6 +252,26 @@ function overallGameEnd(winner) {
       prompt(`The dealer is the overall winner!\n`);
     }
   }
+}
+
+function displayFinalScore(playerHand, dealerHand, playerTotal, dealerTotal,
+  scores) {
+  wait(2000);
+  console.log(`--------------------------`);
+  displayWinner(determineWinner(playerTotal, dealerTotal));
+  console.log(`--------------------------`);
+  prompt('Final Hands: ');
+  prompt('Your hand: ');
+  formatCardsDisplay(playerHand);
+  prompt('Dealer\'s hand: ');
+  formatCardsDisplay(dealerHand);
+  wait(1500);
+
+  prompt(`Final scores: you - ${playerTotal}, dealer – ${dealerTotal}\n`);
+  wait(500);
+  updateGameTally(playerTotal, dealerTotal, scores);
+  prompt(`Overall game scores: you - ${scores.player}, dealer - ${scores.dealer}`);
+  wait(1000);
 }
 
 let scores = initializeGameScores();
@@ -236,27 +297,11 @@ while (true) {
 
   prompt('Dealer\'s hand: ');
   formatCardsDisplay(dealerHand, 'dealer');
+
   while (true) {
 
-    while (true) {
-      prompt("Would you like to hit (h/H) or stay (s/S)?");
-      let answer = readline.prompt();
-
-      while (!ACCEPTABLE_ANSWERS_PLAY.includes(answer)) {
-        prompt('Sorry, that\'s not one of the options.');
-        prompt("Would you like to hit (h/H) or stay (s/S)?");
-        answer = readline.prompt();
-      }
-
-      if (answer.toLowerCase() === 'h') {
-        addToHand(playerHand, dealCard(deck));
-        prompt('Your hand:');
-        formatCardsDisplay(playerHand);
-      }
-      playerTotal = calculateTotal(playerHand);
-      if (answer.toLowerCase() === 's' || busted(playerTotal)) break;
-
-    }
+    playerTurn(playerHand, playerTotal, deck);
+    playerTotal = calculateTotal(playerHand);
 
     if (busted(playerTotal)) {
       announceBust('you');
@@ -265,35 +310,17 @@ while (true) {
       break;
     } else {
       console.log(`You chose to stay. Now it's the dealer's turn!\n`);
+      wait(1000);
     }
 
-    while (dealerTotal <= GAME_NUMBERS[1]) {
-      prompt(`Dealer draws a card.\n`);
-      wait(1500);
-      addToHand(dealerHand, dealCard(deck));
-      prompt('Dealer\'s hand: ');
-      formatCardsDisplay(dealerHand, 'dealer');
-      dealerTotal = calculateTotal(dealerHand);
-    }
+    dealerTurn(dealerHand, dealerTotal, deck);
+    dealerTotal = calculateTotal(dealerHand);
 
     if (dealerHand.length === 2) {
       prompt(`Dealer stays with 2 cards.\n`);
     }
-    wait(2000);
-    console.log(`--------------------------`);
-    displayWinner(determineWinner(playerTotal, dealerTotal));
-    console.log(`--------------------------`);
-    prompt('Final Hands: ');
-    prompt('Your hand: ');
-    formatCardsDisplay(playerHand);
-    prompt('Dealer\'s hand: ');
-    formatCardsDisplay(dealerHand);
-    wait(1500);
 
-    prompt(`Final scores: you - ${playerTotal}, dealer – ${dealerTotal}\n`);
-    wait(500);
-    updateGameTally(playerTotal, dealerTotal, scores);
-    prompt(`Overall game scores: you - ${scores.player}, dealer - ${scores.dealer}`);
+    displayFinalScore(playerHand, dealerHand, playerTotal, dealerTotal, scores);
 
     break;
 
@@ -301,7 +328,9 @@ while (true) {
   let currentGameScore = bestOfFive(scores);
 
   if (currentGameScore) {
+    console.clear();
     overallGameEnd(currentGameScore);
+    scores = initializeGameScores();
   }
 
 
