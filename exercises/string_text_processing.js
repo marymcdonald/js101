@@ -1,4 +1,3 @@
-/*
 //q1
 function isUppercase(str) {
   let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -204,7 +203,7 @@ const text = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem acc
 
 searchWord('sed', text);      // 3
 searchWord('qui', text);      // 4
-*/
+
 
 //q10
 function searchWord(word, text) {
